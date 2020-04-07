@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body onload="draw();">
+  <canvas id="canvas" width="1920" height="1000"></canvas>
+  <script>
+    function draw() {
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+
+      // drawImage(image, x, y, width, height, dx, dy, dWidth, dHeight)
+      // 其中 image 是 image 或者 canvas 对象，x 和 y 是其在目标 canvas 里的起始坐标,
+      // width 和 height，这两个参数用来控制 当向canvas画入时应该缩放的大小。
+      // dx, dy, dWidth, dHeight定义切片的目标显示位置和大小。
+      const image = new Image();
+      image.src = './img/image1.png';
+      image.onload = function () {
+        ctx.drawImage(image, 100, 400, 200, 200);
+        ctx.drawImage(image, 100, 100, 200, 200, 190, 190, 100, 100);
+      }
+    }
+  </script>
+</body>
+
+</html>

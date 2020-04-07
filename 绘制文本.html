@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body onload="draw();">
+  <canvas id="canvas" width="1920" height="1000"></canvas>
+  <script>
+    function draw() {
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+
+      // fillText(text, x, y [, maxWidth]),在指定的(x,y)位置填充指定的文本，绘制的最大宽度是可选的.
+      // strokeText(text, x, y [, maxWidth]),在指定的(x,y)位置绘制文本边框，绘制的最大宽度是可选的.
+      // 当前绘制文本的样式
+      ctx.font = '48px serif';
+      // textAlign,文本对齐选项
+      ctx.textAlign = 'start';
+      // direction,文本方向
+      ctx.direction = 'ltr';
+      // ctx.fillText('Hello World', 10, 50);
+      ctx.strokeText('Hello World', 300, 50);
+    }
+  </script>
+</body>
+
+</html>

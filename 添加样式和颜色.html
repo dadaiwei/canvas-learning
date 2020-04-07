@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body onload="draw();">
+  <canvas id="canvas" width="1920" height="1000"></canvas>
+  <script>
+    function draw() {
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+
+      // fillStyle = color
+      // 设置图形的填充颜色。
+      // strokeStyle = color
+      // 设置图形轮廓的颜色。
+      // globalAlpha = transparencyValue
+      // 这个属性影响到 canvas 里所有图形的透明度，有效的值范围是 0.0 （完全透明）到 1.0（完全不透明），默认是 1.0。
+      for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 6; j++) {
+          ctx.fillStyle = `rgb(${Math.floor(255 - 42.5 * i)}, ${Math.floor(255 - 42.5 * j)}, 0)`;
+          ctx.fillRect(j * 25, i * 25, 25, 25);
+        }
+      }
+
+      for (var i = 0; i < 6; i++) {
+        for (var j = 0; j < 6; j++) {
+          ctx.strokeStyle = 'rgb(0,' + Math.floor(255 - 42.5 * i) + ',' +
+            Math.floor(255 - 42.5 * j) + ')';
+          ctx.beginPath();
+          ctx.arc(200 + j * 25, 12.5 + i * 25, 10, 0, Math.PI * 2, true);
+          ctx.stroke();
+        }
+      }
+
+      // 画背景
+      ctx.fillStyle = '#FD0';
+      ctx.fillRect(125, 225, 75, 75);
+      ctx.fillStyle = '#6C0';
+      ctx.fillRect(200, 225, 75, 75);
+      ctx.fillStyle = '#09F';
+      ctx.fillRect(125, 300, 75, 75);
+      ctx.fillStyle = '#F30';
+      ctx.fillRect(200, 300, 75, 75);
+      ctx.fillStyle = '#FFF';
+
+      // 画背景
+      ctx.fillStyle = 'rgb(255,221,0)';
+      ctx.fillRect(400, 0, 150, 37.5);
+      ctx.fillStyle = 'rgb(102,204,0)';
+      ctx.fillRect(400, 37.5, 150, 37.5);
+      ctx.fillStyle = 'rgb(0,153,255)';
+      ctx.fillRect(400, 75, 150, 37.5);
+      ctx.fillStyle = 'rgb(255,51,0)';
+      ctx.fillRect(400, 112.5, 150, 37.5);
+      // 画半透明矩形
+      for (var i = 0; i < 10; i++) {
+        ctx.fillStyle = 'rgba(255,255,255,' + (i + 1) / 10 + ')';
+        for (var j = 0; j < 4; j++) {
+          ctx.fillRect(405 + i * 14, 5 + j * 37.5, 14, 27.5)
+        }
+      }
+
+      // 设置透明度值
+      // ctx.globalAlpha = 0.2;
+      // 画半透明圆
+      for (var i = 0; i < 7; i++) {
+        ctx.beginPath();
+        ctx.arc(200, 300, 10 + 10 * i, 0, Math.PI * 2, true);
+        ctx.fill();
+      }
+
+      // lineWidth设置当前绘线的粗细
+      // 属性 lineCap 的值决定了线段端点显示的样子，butt，round 和 square。
+      // lineJoin 属性的例子，它可以是这三种之一：round, bevel 和 miter。默认是 miter。
+      var lineCap = ['butt', 'round', 'square'];
+      for (let i = 0; i < 10; i++) {
+        ctx.lineWidth = 1 + i;
+        ctx.lineCap = lineCap[i % 3];
+        ctx.beginPath();
+        ctx.moveTo(600 + i * 20, 0);
+        ctx.lineTo(600 + i * 20, 140);
+        ctx.stroke();
+      }
+      var lineJoin = ['round', 'bevel', 'miter'];
+      ctx.lineWidth = 10;
+      for (var i = 0; i < lineJoin.length; i++) {
+        ctx.lineJoin = lineJoin[i];
+        ctx.beginPath();
+        ctx.moveTo(810, 5 + i * 40);
+        ctx.lineTo(860, 45 + i * 40);
+        ctx.lineTo(910, 5 + i * 40);
+        ctx.lineTo(1010, 45 + i * 40);
+        ctx.lineTo(1060, 5 + i * 40);
+        ctx.stroke();
+      }
+
+      // 渐变
+      // createLinearGradient(x1, y1, x2, y2)
+      // createLinearGradient 方法接受 4 个参数，表示渐变的起点(x1, y1) 与终点(x2, y2) 。
+      // createRadialGradient(x1, y1, r1, x2, y2, r2)
+      // createRadialGradient 方法接受 6 个参数，前三个定义一个以(x1, y1) 为原点，半径为 r1 的圆，后三个参数则定义另一个以(x2, y2) 为原点，半径为 r2 的圆。
+      var lingrad = ctx.createLinearGradient(1100, 0, 1100, 300);
+      lingrad.addColorStop(0, '#00ABEB');
+      lingrad.addColorStop(0.5, '#fff');
+      lingrad.addColorStop(0.5, '#26C000');
+      lingrad.addColorStop(1, '#fff');
+      ctx.fillStyle = lingrad;
+      ctx.fillRect(1100, 0, 300, 300);
+      var lingrad2 = ctx.createLinearGradient(0, 50, 0, 95);
+      lingrad2.addColorStop(0.5, '#000');
+      lingrad2.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.stokeStyle = lingrad2;
+      ctx.strokeRect(1200, 100, 100, 100);
+      const radgrad = ctx.createRadialGradient(100, 400, 20, 100, 400, 100);
+      radgrad.addColorStop(0, '#fff');
+      radgrad.addColorStop(0.9, '#019F62');
+      radgrad.addColorStop(1, 'rgba(1,159,98,0)');
+      ctx.fillStyle = radgrad;
+      ctx.fillRect(100, 400, 100, 100);
+
+      // 图案样式
+      // createPattern(image, type)
+      // 该方法接受两个参数。Image 可以是一个 Image 对象的引用，或者另一个 canvas 对象。Type 必须是下面的字符串值之一：repeat，repeat - x，repeat - y 和 no - repeat。
+      const image = new Image();
+      image.src = 'https://mdn.mozillademos.org/files/222/Canvas_createpattern.png';
+      image.onload = function () {
+        const patrn = ctx.createPattern(image, 'repeat');
+        ctx.fillStyle = patrn;
+        ctx.fillRect(300, 200, 200, 200);
+      }
+
+      // 阴影Shadows
+      // shadowOffsetX/shadowOffsetY用来设定x和y轴的延伸距离
+      // shadowBlur用于设定阴影的模糊程度
+      // shadowColor用于设定颜色效果
+      ctx.shadowOffsetX = 10;
+      ctx.shadowOffsetY = 20;
+      ctx.shadowBlur = 20;
+      ctx.shadowColor = 'red';
+      ctx.fillStyle = 'rgb(1, 0, 0)';
+      ctx.fillRect(550, 200, 100, 100);
+
+      // canvas填充规则
+      // 当我们用到 fill（或者 clip和isPointinPath ）你可以选择一个填充规则，该填充规则根据某处在路径的外面或者里面来决定该处是否被填充，这对于自己与自己路径相交或者路径被嵌套的时候是有用的。
+      //  "nonzero": non-zero winding rule, 默认值.
+      // "evenodd":  even-odd winding rule.
+      ctx.beginPath();
+      ctx.arc(800, 200, 20, 0, Math.PI * 2, true);
+      ctx.arc(800, 200, 40, 0, Math.PI * 2, true);
+      ctx.fill('evenodd');
+    }
+  </script>
+</body>
+
+</html>

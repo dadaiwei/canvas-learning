@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body onload="draw();">
+  <canvas id="canvas" width="1920" height="1000"></canvas>
+  <script>
+    function draw() {
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+
+      // 1.绘制矩形
+      // 绘制一个填充的矩形
+      ctx.fillRect(25, 25, 100, 100);
+      // 清除指定的矩形区域,让清除部分透明
+      ctx.clearRect(45, 45, 60, 60);
+      // 绘制一个矩形的边框
+      ctx.strokeRect(50, 50, 50, 50);
+
+      // 2.绘制路径
+      ctx.beginPath();
+      ctx.moveTo(150, 25);
+      ctx.lineTo(150, 100);
+      ctx.lineTo(200, 100);
+      ctx.closePath();
+      // 调用fill()函数时,所有没有闭合的形状都会自动闭合,但是调用stroke()时不会自动闭合
+      ctx.stroke();
+      // ctx.fill(); 
+
+      // 3.移动笔触
+      // moveTo(x, y)，将笔触移动到指定的坐标x以及y上。
+      ctx.beginPath();
+      ctx.arc(250, 60, 50, 0, Math.PI * 2, true);
+      ctx.moveTo(280, 60);
+      ctx.arc(250, 60, 30, 0, Math.PI, false);
+      ctx.moveTo(235, 40);
+      ctx.arc(230, 40, 5, 0, Math.PI * 2, true);
+      ctx.moveTo(275, 40);
+      ctx.arc(270, 40, 5, 0, Math.PI * 2, true);
+      ctx.stroke();
+
+      // 4.线
+      ctx.moveTo(320, 60);
+      ctx.lineTo(400, 60);
+      ctx.stroke();
+
+      // 5.圆弧
+      // arc(x, y, radius, startAngle, endAngle, anticlockwise)
+      // 画一个以（x,y）为圆心的以radius为半径的圆弧（圆），从startAngle开始到endAngle结束，按照anticlockwise给定的方向（默认为顺时针）来生成。
+      ctx.beginPath();
+      // ctx.arc(460, 60, 40, 0, Math.PI * 2, false);
+      ctx.moveTo(500, 20);
+      ctx.arcTo(500, 60, 540, 60, 40);
+      ctx.stroke();
+      for (var i = 0; i < 4; i++) {
+        for (var j = 0; j < 3; j++) {
+          ctx.beginPath();
+          var x = 620 + j * 50; // x 坐标值
+          var y = 25 + i * 50; // y 坐标值
+          var radius = 20; // 圆弧半径
+          var startAngle = 0; // 开始点
+          var endAngle = Math.PI + (Math.PI * j) / 2; // 结束点
+          var anticlockwise = i % 2 == 0 ? false : true; // 顺时针或逆时针
+
+          ctx.arc(x, y, radius, startAngle, endAngle, anticlockwise);
+
+          if (i > 1) {
+            ctx.fill();
+          } else {
+            ctx.stroke();
+          }
+        }
+      }
+
+      // 6.二次贝塞尔曲线及三次贝塞尔曲线
+      // quadraticCurveTo(cp1x, cp1y, x, y)
+      // 绘制二次贝塞尔曲线，cp1x,cp1y为一个控制点，x,y为结束点。
+      // bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y)
+      // 绘制三次贝塞尔曲线，cp1x,cp1y为控制点一，cp2x,cp2y为控制点二，x,y为结束点。
+      // 二次贝塞尔曲线
+      ctx.beginPath();
+      ctx.moveTo(75, 225);
+      ctx.quadraticCurveTo(25, 225, 25, 262.5);
+      ctx.quadraticCurveTo(25, 300, 50, 300);
+      ctx.quadraticCurveTo(50, 320, 30, 325);
+      ctx.quadraticCurveTo(60, 320, 65, 300);
+      ctx.quadraticCurveTo(125, 300, 125, 262.5);
+      ctx.quadraticCurveTo(125, 225, 75, 225);
+      ctx.stroke();
+      // 三次贝塞尔曲线
+      ctx.beginPath();
+      ctx.moveTo(375, 200);
+      ctx.bezierCurveTo(375, 197, 370, 185, 350, 185);
+      ctx.bezierCurveTo(320, 185, 320, 222.5, 320, 222.5);
+      ctx.bezierCurveTo(320, 240, 340, 262, 375, 280);
+      ctx.bezierCurveTo(410, 262, 430, 240, 430, 222.5);
+      ctx.bezierCurveTo(430, 222.5, 430, 185, 400, 185);
+      ctx.bezierCurveTo(385, 185, 375, 197, 375, 200);
+      ctx.fill();
+
+      // 7.矩形
+      // rect(x, y, width, height)
+      // 绘制一个左上角坐标为（x,y），宽高为width以及height的矩形。
+      ctx.fillRect(800, 100, 200, 200);
+      ctx.fill();
+    }
+  </script>
+</body>
+
+</html>
